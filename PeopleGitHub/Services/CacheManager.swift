@@ -17,8 +17,7 @@ class CacheManager {
         let urlRequest = URLRequest(url: url)
         if let cachedResponse = URLCache.shared.cachedResponse(for: urlRequest) {
             return cachedResponse.data
-        }
-        return nil
+        } else { return nil }
     }
 
     func saveImageData(with data: Data, and response: URLResponse) {

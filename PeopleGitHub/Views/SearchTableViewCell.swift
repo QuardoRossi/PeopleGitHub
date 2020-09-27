@@ -26,8 +26,8 @@ class SearchTableViewCell: UITableViewCell {
         if object?.type == "User" { type = "Пользователь" }
         if object?.type == "Organization" { type = "Организация" }
 
-        loginLabel.text = object?.login ?? "Error login"
         typeLabel.text = type
+        loginLabel.text = object?.login ?? "Error login"
 
         ImageManager.shared.fetchImageData(from: object?.avatarUrl ?? "") { (data) in
             guard data != nil else { self.avatarImageView.image = #imageLiteral(resourceName: "stockImage"); return }

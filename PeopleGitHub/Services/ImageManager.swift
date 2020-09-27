@@ -14,21 +14,19 @@ class ImageManager {
     
     // MARK: - Public Methods
     func fetchImageData(from url: String, with complition: @escaping (Data?) -> Void)  {
-        let imageData: Data? = nil
-        
         guard let url = URL(string: url) else {
-            complition(imageData)
+            complition(nil)
             return
         }
         
         if let cachedResponseData = CacheManager.shared.getImageData(from: url) {
             let imageData = cachedResponseData
             complition(imageData)
-        }
-        
-        NetworkManager.shared.fetchImageData(from: url) { (data, response) in
-            DispatchQueue.main.async { complition(data) }
-            CacheManager.shared.saveImageData(with: data, and: response)
+        } else {
+            NetworkManager.shared.fetchImageData(from: url) { (data, response) in
+                DispatchQueue.main.async { complition(data) }
+                CacheManager.shared.saveImageData(with: data, and: response)
+            }
         }
     }
 }
